@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardElevation="10dp"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_line_surah"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/muslim_ic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/ic_muslim"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:id="@+id/id_tv_nomor"
+                app:layout_constraintTop_toTopOf="@id/ic_muslim"
+                app:layout_constraintBottom_toBottomOf="@id/ic_muslim"
+                app:layout_constraintLeft_toLeftOf="@id/ic_muslim"
+                app:layout_constraintRight_toRightOf="@id/ic_muslim"
+                android:textStyle="bold"
+                android:fontFamily="@font/popins_bold"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toRightOf="@id/ic_muslim"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/id_layout_frame_surah"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Al-Fatihah"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_medium"
+                    android:id="@+id/id_tv_nama_surat"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MECCAN 7 VERSE"
+                    android:id="@+id/id_tv_tempat_turun_jumlah_ayat"
+                    android:textColor="#8789A3"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/id_tv_nama"
+                android:layout_width="match_parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amiri_quran"
+                android:text="ةحتافلا"
+                android:textColor="@color/color_font_purpleinc"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginRight="30dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
