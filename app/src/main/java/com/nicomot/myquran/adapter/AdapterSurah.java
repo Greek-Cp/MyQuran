@@ -40,7 +40,7 @@ public class AdapterSurah extends RecyclerView.Adapter<AdapterSurah.ViewHolder> 
         holder.textViewNamaSuratArab.setText(listSurat.get(position).getNama());
         String tempatTurun = listSurat.get(position).getTempatTurun();
         String jumlahAyat = String.valueOf(listSurat.get(position).getJumlahAyat());
-        holder.textViewTempatTurunDanJumlahAyat.setText(tempatTurun + "*" + jumlahAyat);
+        holder.textViewTempatTurunDanJumlahAyat.setText(tempatTurun + " | " + jumlahAyat + " Ayat ");
         holder.textViewNamaSurat.setText(listSurat.get(position).getNamaLatin());;
 
     }

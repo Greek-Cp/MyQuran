@@ -21,6 +21,7 @@ import com.nicomot.myquran.R;
 import com.nicomot.myquran.adapter.AdapterCategory;
 import com.nicomot.myquran.adapter.AdapterSurah;
 import com.nicomot.myquran.apipoint.JsonEquranIdApiInterface;
+import com.nicomot.myquran.client.RetroFitClient;
 import com.nicomot.myquran.model.ModelDetailSurah;
 import com.nicomot.myquran.model.ModelSurat;
 
@@ -64,7 +65,7 @@ public class HomeFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
 
-    private Retrofit mRetrofit;
+    private RetroFitClient mRetrofit;
     private JsonEquranIdApiInterface mJsonEquranApiInterface;
     private ActivityResultLauncher<String[]> mActivityResultLauncher;
     private boolean isPermissionAccessInternetGranted = false;
@@ -122,11 +123,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void retrofitInitializer(){
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl("https://equran.id/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        mJsonEquranApiInterface = mRetrofit.create(JsonEquranIdApiInterface.class);
+        mRetrofit = new RetroFitClient("https://equran.id/api/");
+        mJsonEquranApiInterface = mRetrofit.getInstance().create(JsonEquranIdApiInterface.class);
     }
     private AdapterSurah.SurahAdapterInterface surahAdapterInterface;
     private void getModelSurat(){

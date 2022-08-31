@@ -1,5 +1,7 @@
 package com.nicomot.myquran.fragment;
 
+import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -19,6 +21,8 @@ import android.widget.TextView;
 import com.nicomot.myquran.R;
 import com.nicomot.myquran.adapter.AdapterAyat;
 import com.nicomot.myquran.apipoint.JsonEquranIdApiInterface;
+import com.nicomot.myquran.client.RetroFitClient;
+import com.nicomot.myquran.model.ModelAyat;
 import com.nicomot.myquran.model.ModelDetailSurah;
 
 import java.io.IOException;
@@ -45,7 +49,7 @@ public class ReadSurahFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Retrofit mRetrofit;
+    private RetroFitClient  mRetrofit;
     private JsonEquranIdApiInterface mJsonEquranApiInterface;
     private TextView textViewNamaSurat , textViewNamaSuratCard
             , textViewNamaSuratMain , textViewTempatTurun;
@@ -53,11 +57,8 @@ public class ReadSurahFragment extends Fragment {
 
     private ImageView backBtn;
     private void retrofitInitializer(){
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl("https://equran.id/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        mJsonEquranApiInterface = mRetrofit.create(JsonEquranIdApiInterface.class);
+        mRetrofit = new RetroFitClient("https://equran.id/api/");
+        mJsonEquranApiInterface = mRetrofit.getInstance().create(JsonEquranIdApiInterface.class);
     }
     public ReadSurahFragment() {
         // Required empty public constructor
@@ -91,12 +92,11 @@ public class ReadSurahFragment extends Fragment {
                textViewNamaSuratMain.setText(response.body().getNamaLatin());
                textViewNamaSurat.setText(response.body().getNama());
                textViewNamaSuratCard.setText(response.body().getNama());;
-               textViewTempatTurun.setText(response.body().getTempatTurun() + " | " + String.valueOf(response.body().getJumlahAyat()));
+               textViewTempatTurun.setText(response.body().getTempatTurun() + " | " + String.valueOf(response.body().getJumlahAyat() + " Ayat"));
                AdapterAyat.AdapterAyatInterface adapterAyatInterface = new AdapterAyat.AdapterAyatInterface() {
                    @Override
                    public void putarAyat(int positionOfAyat) {
                        String audioUrl = response.body().getAudioUri();
-
                        if(mediaPlayer.isPlaying()){
                             mediaPlayer.reset();
                        }
@@ -105,7 +105,6 @@ public class ReadSurahFragment extends Fragment {
                            mediaPlayer.setDataSource(audioUrl);
                            mediaPlayer.prepare();
                            mediaPlayer.start();
-
                        } catch (IOException e) {
                            e.printStackTrace();
                        }
@@ -113,7 +112,20 @@ public class ReadSurahFragment extends Fragment {
 
                    @Override
                    public void shareAyat(int positionOfAyat) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_SEND);
+                        ModelDetailSurah modelDetailSurah = response.body();
 
+
+                        String ayatArab =modelDetailSurah.getNama() + " (" + modelDetailSurah.getNamaLatin() + ")\n"+ "Jumlah Ayat " +
+                                modelDetailSurah.getJumlahAyat() + "\n"
+                                + response.body().getListAyat().get(positionOfAyat).getHurufArabText() +"\n" +
+                                response.body().getListAyat().get(positionOfAyat).getHurufIndonesia() + "\n" +
+                                "MyQuran";
+                        intent.putExtra(Intent.EXTRA_TEXT,ayatArab);
+                        intent.setType("text/plain");
+                        Intent shareIntent = Intent.createChooser(intent,null);
+                        startActivity(shareIntent);
                    }
 
                    @Override
@@ -122,7 +134,10 @@ public class ReadSurahFragment extends Fragment {
                    }
                };
                AdapterAyat adapterAyat = new AdapterAyat(response.body().getListAyat(),adapterAyatInterface);
+               recViewAyat.setNestedScrollingEnabled(false);
+               recViewAyat.setFocusable(false);
                recViewAyat.setAdapter(adapterAyat);
+
            }
 
            @Override
